@@ -12,31 +12,18 @@ use $_POST['{element name in form}'];
 For GET:
 use $_GET['{element name in form}'];
 
-Tip : If you are using $_GET or $_POST, please use the php function "stripslashes" to avoid compilation error. Not using the function will result in stray '/' in your code.
-
 */
 
 $client=""; // Your client secret code.
-$source_code=""; //the source code.
-$lang=""; // the language of the source code. refer to http://developer.hackerearth.com to see how this variable should be passed.
+$code=""; //the source code.
+$lang=""; // the language of the source code. eg C++ C++11 C C# Python
 $input=""; // the input values to run this code on. (Optional)
 
-$compile_value = compile($client,$source_code,$lang,$input);
+$hack = new HackApi;
+$hack->set_client_secret($client); //set your client secret id everytime a new object is created.
+$hack->init($lang,$code,$input); // initialise your code
+$hack->compile(); // compile it. to run : $hack->run();
 
-/*
-calling the function compile to compile the source code.
-The return value is an array which is the parsed json returned (See : http://developer.hackerearth.com )
-You can check through the values and display appropriate error messages to the user.
-the array is stored in $compile_value
-*/
-
-$run_value = run($client,$source_code,$lang,$input);
-
-/*
-calling the function run to run the source code on the inputs.
-The return value is an array which is the parsed json returned (See : http://developer.hackerearth.com )
-You can check through the values and display appropriate error messages to the user.
-the array is stored in $run_value
-*/
+echo $hack->compile_status; // print the compile status message
 
 ?>
